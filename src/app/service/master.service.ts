@@ -19,4 +19,16 @@ export class MasterService {
       `${this.apiURL}/searchBus?fromLocation=${from}&toLocation=${to}&travelDate=${travelDate}`
     );
   }
+
+  register(user: any): Observable<any> {
+    return this.http.post(`${this.apiURL}/AddNewUser`, user);
+  }
+
+  login(data: any): Observable<any> {
+    return this.http.post(`${this.apiURL}/login`, data);
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get(`${this.apiURL}/GetAllUsers`);
+  }
 }

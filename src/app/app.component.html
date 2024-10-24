@@ -1,1 +1,257 @@
+<nav
+  class="flex flex-wrap items-center justify-between p-4 bg-gray-300"
+  style="background-color: rgb(171 177 183) !important; height: 100px"
+>
+  <div class="container flex items-center justify-between">
+    <a class="text-xl font-bold" href="#"
+      ><img
+        src="https://s3.rdbuz.com/Images/rdc/rdc-redbus-logo.webp"
+        alt="abhibus"
+        style="width: 5rem"
+    /></a>
+    <div class="flex flex-col justify-center ml-4">
+      <span>Trusted by</span><span class="font-bold">5 Crore+ Travellers</span>
+    </div>
+    <button
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      class="block lg:hidden p-2 border border-gray-400 rounded"
+    >
+      <span class="block w-6 h-6 bg-gray-700"></span>
+    </button>
+    <div id="navbarNav" class="hidden lg:flex lg:flex-grow lg:items-center">
+      <ul class="flex flex-col lg:flex-row ml-auto items-center">
+        <li class="flex items-center">
+          <a
+            routerlinkactive="router-link-active"
+            class="px-3 py-2 text-gray-700 hover:text-gray-900"
+            href="#"
+          >
+            <i class="icon bi bi-bus"></i>Buses
+          </a>
+        </li>
+        <li class="flex items-center">
+          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
+            <i class="icon bi bi-train"></i>Trains
+          </a>
+        </li>
+        <li class="flex items-center">
+          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
+            <i class="icon bi bi-airplane"></i>Flights
+          </a>
+        </li>
+        <li class="flex items-center">
+          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
+            <i class="icon bi bi-building"></i>Hotels
+          </a>
+        </li>
+        <li class="flex items-center">
+          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
+            <i class="icon bi bi-gift"></i>Offers
+          </a>
+        </li>
+        <li class="flex items-center">
+          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
+            <i class="icon bi bi-ticket-perforated"></i>Track Ticket
+          </a>
+        </li>
+        <li class="flex items-center">
+          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
+            <i class="icon bi bi-headset"></i>Need Help?
+          </a>
+        </li>
+        @if (loggedUser) {
+        <li class="flex items-center">
+          <a class="px-3 py-2 text-green-600 hover:text-green-800">
+            <i class="icon bi bi-person">{{ loggedUser.userName }}</i>
+          </a>
+        </li>
+        <li class="flex items-center">
+          <a
+            class="px-3 py-2 text-red-600 hover:text-red-800"
+            (click)="logout()"
+          >
+            <i class="icon bi bi-person"></i>Logout
+          </a>
+        </li>
+        } @else {
+        <li class="flex items-center">
+          <a
+            class="px-3 py-2 text-red-600 hover:text-red-800"
+            (click)="openModal()"
+          >
+            <i class="icon bi bi-person"></i>Login/SignUp
+          </a>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <router-outlet />
+
+<div class="fixed inset-0 hidden z-50" id="myModal">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-lg">
+    <div class="flex flex-col">
+      <div class="flex items-center justify-between p-4 border-b">
+        <h4 class="text-lg font-semibold">Modal Heading</h4>
+        <button
+          type="button"
+          class="text-gray-500 hover:text-gray-700 text-3xl"
+          data-bs-dismiss="modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="p-4">
+        @if (isLoginForm) {<!--LOGIN FORM-->
+        <form>
+          <!-- UserName input -->
+          <div class="mb-4">
+            <label class="block mt-2 text-gray-500" for="form2Example1"
+              >UserName</label
+            >
+            <input
+              type="text"
+              id="form2Example1"
+              class="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              [(ngModel)]="loginObj.userName"
+              name="userName"
+            />
+          </div>
+
+          <!-- Password input -->
+          <div class="mb-4">
+            <label class="block mt-2 text-gray-500" for="form2Example2"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="form2Example2"
+              class="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              [(ngModel)]="loginObj.password"
+              name="password"
+            />
+          </div>
+
+          <!-- 2 column grid layout for inline styling -->
+          <div class="flex flex-wrap mb-4">
+            <div class="w-full flex justify-center">
+              <!-- Checkbox -->
+              <div class="flex items-center">
+                <input
+                  class="form-check-input mr-2"
+                  type="checkbox"
+                  value=""
+                  id="form2Example31"
+                  checked
+                />
+                <label class="form-check-label" for="form2Example31">
+                  Remember me
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit button -->
+          <button
+            type="button"
+            data-mdb-button-init
+            data-mdb-ripple-init
+            class="w-full bg-blue-500 text-white py-2 rounded mb-4"
+            (click)="loginUser()"
+          >
+            Sign in
+          </button>
+
+          <!-- Register buttons -->
+          <div class="text-center">
+            <p>
+              Not a member?
+              <a class="text-blue-500" (click)="isLoginForm = false"
+                >Register</a
+              >
+            </p>
+          </div>
+        </form>
+        } @else {<!--REGISTER FORM-->
+        <form>
+          <!-- Email input -->
+          <div class="mb-4">
+            <label class="block mt-2 text-gray-500" for="form2Example1"
+              >Email address</label
+            >
+            <input
+              type="email"
+              class="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 form-control"
+              [(ngModel)]="registerObj.emailId"
+              name="emailId"
+            />
+          </div>
+
+          <!-- UserName input-->
+          <div class="mb-4">
+            <label class="block mt-2 text-gray-500" for="form2Example1"
+              >User Name</label
+            >
+            <input
+              type="text"
+              class="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 form-control"
+              [(ngModel)]="registerObj.userName"
+              name="userName"
+            />
+          </div>
+
+          <!-- FullName input-->
+          <div class="mb-4">
+            <label class="block mt-2 text-gray-500" for="form2Example1"
+              >Full Name</label
+            >
+            <input
+              type="email"
+              class="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 form-control"
+              [(ngModel)]="registerObj.fullName"
+              name="fullName"
+            />
+          </div>
+
+          <!-- Password input -->
+          <div class="mb-4">
+            <label class="block mt-2 text-gray-500" for="form2Example2"
+              >Password</label
+            >
+            <input
+              type="password"
+              class="block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 form-control"
+              [(ngModel)]="registerObj.password"
+              name="password"
+            />
+          </div>
+
+          <!-- Submit button -->
+          <button
+            type="button"
+            data-mdb-button-init
+            data-mdb-ripple-init
+            class="w-full bg-blue-500 text-white py-2 rounded mb-4"
+            (click)="registerUser()"
+          >
+            Register
+          </button>
+
+          <!-- Register buttons -->
+          <div class="text-center">
+            <p>
+              Already a member?
+              <a class="text-blue-500" (click)="isLoginForm = true">Login</a>
+            </p>
+          </div>
+        </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>

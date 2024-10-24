@@ -49,3 +49,8 @@
   height: 30px;
   margin-right: 10px;
 }
+.modal-centered {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
