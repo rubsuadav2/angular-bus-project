@@ -1,1 +1,107 @@
-<p>booking works!</p>
+<section
+  id="booking-form"
+  class="my-4 flex justify-center items-center min-h-screen mx-20"
+>
+  <div class="container mx-auto mt-5">
+    <div class="flex flex-wrap justify-center items-center">
+      <div class="w-full md:w-1/3">
+        <div class="flex flex-col items-center">
+          <div class="w-full text-right">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2907/2907720.png"
+              alt="Driver Icon"
+              class="driver"
+            />
+          </div>
+        </div>
+        <div class="flex flex-wrap justify-center">
+          @for(seatNb of seatArray; track $index) {
+          @if(checkIfSeatBooked(seatNb) != -1) {
+          <div class="w-1/4 p-1">
+            <div class="seat reserved">{{ seatNb }}</div>
+          </div>
+          } @else { @if (checkIfSeatSelected(seatNb) != -1) {
+          <div class="w-1/4 p-1">
+            <div class="seat selected" (click)="selectSeat(seatNb)">
+              {{ seatNb }}
+            </div>
+          </div>
+          } @else {
+          <div class="w-1/4 p-1">
+            <div class="seat available" (click)="selectSeat(seatNb)">
+              {{ seatNb }}
+            </div>
+          </div>
+          } } }
+        </div>
+      </div>
+
+      <!-- INFORMATION PASSENGER DATA FORM-->
+      <div class="w-full md:w-2/3">
+        @for (selectedSeat of userSelectedSeats; track $index) {
+        <div class="flex flex-wrap bg-gray-100 p-6 rounded-lg shadow-lg">
+          <div class="w-full md:w-1/3 px-2 mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2"
+              >Passenger Name</label
+            >
+            <input
+              type="text"
+              class="form-control mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [(ngModel)]="selectedSeat.passengerName"
+              name="passengerName"
+            />
+          </div>
+          <div class="w-full md:w-1/3 px-2 mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2"
+              >Age</label
+            >
+            <input
+              type="number"
+              step="0"
+              min="1"
+              class="form-control mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [(ngModel)]="selectedSeat.age"
+              name="age"
+            />
+          </div>
+          <div class="w-full md:w-1/3 px-2 mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2"
+              >Gender</label
+            >
+            <select
+              class="form-control block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white text-gray-700"
+              [(ngModel)]="selectedSeat.gender"
+              name="gender"
+            >
+              <option value="Male">Male</option>
+              <option value="Fe-Male">Fe-Male</option>
+            </select>
+          </div>
+          <div class="w-full md:w-1/3 px-2 mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2"
+              >Seat No</label
+            >
+            <input
+              type="text"
+              class="form-control background-gray-100 mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-300"
+              disabled
+              [(ngModel)]="selectedSeat.seatNo"
+              name="seatNo"
+            />
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    <div class="flex flex-wrap justify-center items-center text-center space-x-4">
+      <div class="w-full md:w-2/3">
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
+          (click)="doBooking()"
+        >
+          Book Now
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

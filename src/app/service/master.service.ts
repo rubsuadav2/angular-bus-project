@@ -20,6 +20,20 @@ export class MasterService {
     );
   }
 
+  getScheduleById(id: number): Observable<any> {
+    return this.http.get(`${this.apiURL}/GetBusScheduleById?id=${id}`);
+  }
+
+  getBookedSeats(scheduleId: number): Observable<any> {
+    return this.http.get(
+      `${this.apiURL}/getBookedSeats?shceduleId=${scheduleId}`
+    );
+  }
+
+  booking(data: any): Observable<any> {
+    return this.http.post(`${this.apiURL}/PostBusBooking`, data);
+  }
+
   register(user: any): Observable<any> {
     return this.http.post(`${this.apiURL}/AddNewUser`, user);
   }
