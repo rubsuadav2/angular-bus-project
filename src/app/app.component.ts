@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -9,7 +9,7 @@ import { MasterService } from './service/master.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule],
+  imports: [RouterOutlet, FormsModule, RouterLink],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
@@ -139,5 +139,41 @@ export class AppComponent {
       showConfirmButton: false,
     });
     this.loggedUser = null;
+    window.location.reload();
+  }
+
+  onRegisterVendor() {
+    this.masterService.registerVendor(this.registerObj).subscribe({
+      next: (res) => {
+        if (res.result) {
+          Swal.fire({
+            title: res.message,
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+          });
+          this.loggedUser = res.data;
+          localStorage.setItem('user', JSON.stringify(res.data));
+          this.closeModal();
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        }
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error!',
+          icon: 'error',
+          text: JSON.stringify(err),
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      },
+    });
   }
 }

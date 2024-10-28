@@ -22,46 +22,17 @@
     </button>
     <div id="navbarNav" class="hidden lg:flex lg:flex-grow lg:items-center">
       <ul class="flex flex-col lg:flex-row ml-auto items-center">
+        @if (loggedUser) { @if (loggedUser.role === "Vendor") {
         <li class="flex items-center">
           <a
-            routerlinkactive="router-link-active"
-            class="px-3 py-2 text-gray-700 hover:text-gray-900"
-            href="#"
+            class="px-3 py-2"
+            [routerLink]="['/schedule']"
+            routerLinkActive="router-link-active"
           >
-            <i class="icon bi bi-bus"></i>Buses
+            <i class="icon bi bi-person">Bus Schedule</i>
           </a>
         </li>
-        <li class="flex items-center">
-          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
-            <i class="icon bi bi-train"></i>Trains
-          </a>
-        </li>
-        <li class="flex items-center">
-          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
-            <i class="icon bi bi-airplane"></i>Flights
-          </a>
-        </li>
-        <li class="flex items-center">
-          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
-            <i class="icon bi bi-building"></i>Hotels
-          </a>
-        </li>
-        <li class="flex items-center">
-          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
-            <i class="icon bi bi-gift"></i>Offers
-          </a>
-        </li>
-        <li class="flex items-center">
-          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
-            <i class="icon bi bi-ticket-perforated"></i>Track Ticket
-          </a>
-        </li>
-        <li class="flex items-center">
-          <a class="px-3 py-2 text-gray-700 hover:text-gray-900" href="#">
-            <i class="icon bi bi-headset"></i>Need Help?
-          </a>
-        </li>
-        @if (loggedUser) {
+        }
         <li class="flex items-center">
           <a class="px-3 py-2 text-green-600 hover:text-green-800">
             <i class="icon bi bi-person">{{ loggedUser.userName }}</i>
@@ -241,6 +212,17 @@
           >
             Register
           </button>
+
+          <button
+            type="button"
+            data-mdb-button-init
+            data-mdb-ripple-init
+            class="w-full bg-blue-500 text-white py-2 rounded mb-4"
+            (click)="onRegisterVendor()"
+          >
+            Register as a Vendor
+          </button>
+
 
           <!-- Register buttons -->
           <div class="text-center">

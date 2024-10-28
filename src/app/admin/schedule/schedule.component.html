@@ -1,0 +1,282 @@
+<div class="container mx-auto mt-5">
+  <div class="flex justify-end mr-10">
+    <button
+      class="bg-green-500 text-white py-2 px-4 rounded"
+      (click)="isFormVisible = !isFormVisible"
+    >
+      {{ isFormVisible ? "Show Schedule List" : "Add New Schedule" }}
+    </button>
+  </div>
+  @if (isFormVisible) {
+  <div class="card bg-white shadow-md rounded-lg px-10 mt-5">
+    <div class="card-header bg-blue-500 text-white p-4 rounded-t-lg">
+      Bus Schedule Form
+    </div>
+    <div class="card-body p-6">
+      <form id="scheduleForm" (ngSubmit)="onCreateSchedule()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <div class="mb-3">
+              <label for="busName" class="form-label block text-gray-700"
+                >Bus Name</label
+              >
+              <input
+                type="text"
+                class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm h-10"
+                placeholder="Enter bus name"
+                [(ngModel)]="schedule.busName"
+                name="busName"
+              />
+            </div>
+          </div>
+          <div>
+            <div class="mb-3">
+              <label for="busVehicleNo" class="form-label block text-gray-700"
+                >Bus Vehicle No</label
+              >
+              <input
+                type="text"
+                class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm h-10"
+                id="busVehicleNo"
+                placeholder="Enter bus vehicle number"
+                [(ngModel)]="schedule.busVehicleNo"
+                name="busVehicleNo"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="fromLocation" class="form-label block text-gray-700"
+              >From Location</label
+            >
+            <select
+              class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm h-10"
+              id="fromLocation"
+              [(ngModel)]="schedule.fromLocation"
+              name="fromLocation"
+            >
+              @for (location of locations; track $index) {
+              <option [value]="location.locationId">
+                {{ location.locationName }}
+              </option>
+              }
+            </select>
+          </div>
+          <div>
+            <label for="toLocation" class="form-label block text-gray-700"
+              >To Location</label
+            >
+            <select
+              class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm h-10"
+              id="toLocation"
+              [(ngModel)]="schedule.toLocation"
+              name="toLocation"
+            >
+              @for (location of locations; track $index) {
+              <option [value]="location.locationId">
+                {{ location.locationName }}
+              </option>
+              }
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+          <div>
+            <label for="departureTime" class="form-label block text-gray-700"
+              >Departure Time</label
+            >
+            <input
+              type="datetime-local"
+              class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm h-10"
+              id="departureTime"
+              [(ngModel)]="schedule.departureTime"
+              name="departureTime"
+            />
+          </div>
+          <div>
+            <label for="arrivalTime" class="form-label block text-gray-700"
+              >Arrival Time</label
+            >
+            <input
+              type="datetime-local"
+              class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm h-10"
+              id="arrivalTime"
+              [(ngModel)]="schedule.arrivalTime"
+              name="arrivalTime"
+            />
+          </div>
+          <div>
+            <label for="scheduleDate" class="form-label block text-gray-700"
+              >Schedule Date</label
+            >
+            <input
+              type="date"
+              class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm h-10"
+              id="scheduleDate"
+              [(ngModel)]="schedule.scheduleDate"
+              name="scheduleDate"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+          <div>
+            <label for="price" class="form-label block text-gray-700"
+              >Price</label
+            >
+            <input
+              type="number"
+              class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm h-10"
+              id="price"
+              placeholder="Enter price"
+              step="0"
+              min="0"
+              [(ngModel)]="schedule.price"
+              name="price"
+            />
+          </div>
+          <div>
+            <label for="totalSeats" class="form-label block text-gray-700"
+              >Total Seats</label
+            >
+            <input
+              type="number"
+              class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm h-10"
+              id="totalSeats"
+              placeholder="Enter total seats"
+              step="0"
+              min="0"
+              [(ngModel)]="schedule.totalSeats"
+              name="totalSeats"
+            />
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-success mt-4 bg-green-500 text-white py-2 px-4 rounded-md shadow-sm"
+        >
+          Save Schedule
+        </button>
+      </form>
+    </div>
+  </div>
+  } @else {
+  <!-- Bus Schedule List Table -->
+  <div class="mt-5 px-5">
+    <div class="bg-gray-700 text-white p-4">Bus Schedule List</div>
+    <div class="p-4">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Schedule ID
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Vendor
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Bus Name
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              From Location
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              To Location
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Departure Time
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Arrival Time
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Schedule Date
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Price
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Total Seats
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody id="scheduleList" class="bg-white divide-y divide-gray-200">
+          @for (schedule of schedules; track $index) {
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.scheduleId }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.vendorId }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.busName }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.fromLocation }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.toLocation }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.departureTime }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.arrivalTime }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.scheduleDate }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.price }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {{ schedule.totalSeats }}
+            </td>
+            <!-- <td class="px-6 py-4 whitespace-nowrap">
+              <button
+                    class="bg-blue-500 text-white py-2 px-4 rounded"
+                    (click)="onEditSchedule(schedule)"
+                >
+                    Edit
+                </button>
+                <button
+                    class="bg-red-500 text-white py-2 px-4 rounded"
+                    (click)="onDeleteSchedule(schedule)"
+                >
+                    Delete
+                </button>
+            </td> -->
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+</div>
