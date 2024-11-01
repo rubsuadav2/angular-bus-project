@@ -53,4 +53,10 @@ export class MasterService {
   createSchedule(data: any): Observable<any> {
     return this.http.post(`${this.apiURL}/PostBusSchedule`, data);
   }
+
+  deleteSchedule(scheduleId: number): Observable<any> {
+    return this.http.delete(
+      `${this.apiURL}/DeleteBusSchedule?id=${scheduleId}`
+    );
+  }
 }

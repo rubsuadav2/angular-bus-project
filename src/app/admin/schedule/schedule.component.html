@@ -258,20 +258,20 @@
             <td class="px-6 py-4 whitespace-nowrap">
               {{ schedule.totalSeats }}
             </td>
-            <!-- <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <!-- <button
+                class="bg-blue-500 text-white py-2 px-4 rounded"
+                (click)="onEditSchedule(schedule)"
+              >
+                Edit
+              </button> -->
               <button
-                    class="bg-blue-500 text-white py-2 px-4 rounded"
-                    (click)="onEditSchedule(schedule)"
-                >
-                    Edit
-                </button>
-                <button
-                    class="bg-red-500 text-white py-2 px-4 rounded"
-                    (click)="onDeleteSchedule(schedule)"
-                >
-                    Delete
-                </button>
-            </td> -->
+                class="bg-red-500 text-white py-2 px-4 rounded"
+                (click)="onDeleteSchedule(schedule.scheduleId)"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
           }
         </tbody>

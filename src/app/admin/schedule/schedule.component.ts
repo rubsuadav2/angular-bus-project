@@ -72,4 +72,45 @@ export class ScheduleComponent implements OnInit {
       },
     });
   }
+
+  onDeleteSchedule(id: number) {
+    Swal.fire({
+      title: `Are you sure that you want to delete schedule with id ${id}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const index = this.schedules.findIndex(
+          (schedule) => schedule.scheduleId === id
+        );
+        if (index !== -1) {
+          this.masterService.deleteSchedule(id).subscribe({
+            next: () => {
+              this.schedules.splice(index, 1);
+              localStorage.setItem('schedules', JSON.stringify(this.schedules));
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'The schedule has been deleted.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+              });
+              window.location.reload();
+            },
+            error: () => {
+              Swal.fire({
+                title: 'Error',
+                text: 'Schedule not found',
+                icon: 'error',
+                timer: 1500,
+                showConfirmButton: false,
+              });
+            },
+          });
+        }
+      }
+    });
+  }
 }
